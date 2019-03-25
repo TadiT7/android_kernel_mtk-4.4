@@ -535,6 +535,8 @@ static void __spm_check_dram_type(void)
 		__spmfw_idx = SPMFW_LP4X_1CH;
 	else if (ddr_type == TYPE_LPDDR3 && emi_ch_num == 1)
 		__spmfw_idx = SPMFW_LP3_1CH;
+	else if (ddr_type == TYPE_LPDDR4 && emi_ch_num == 2)
+		__spmfw_idx = SPMFW_LP4_2CH_2400;
 	pr_info("#@# %s(%d) __spmfw_idx 0x%x\n", __func__, __LINE__, __spmfw_idx);
 };
 #elif defined(CONFIG_MACH_MT6771)
@@ -553,7 +555,10 @@ static void __spm_check_dram_type(void)
 		__spmfw_idx = SPMFW_LP4X_2CH_3200;
 	else if (ddr_type == TYPE_LPDDR3 && ddr_hz == 1866)
 		__spmfw_idx = SPMFW_LP3_1CH_1866;
-	pr_info("#@# %s(%d) __spmfw_idx 0x%x\n", __func__, __LINE__, __spmfw_idx);
+	else if (ddr_type == TYPE_LPDDR4 && ddr_hz == 2400)
+		__spmfw_idx = SPMFW_LP4_2CH_2400;
+	pr_info("#@# %s(%d) __spmfw_idx 0x%x (type:%d freq:%d)\n",
+		__func__, __LINE__, __spmfw_idx, ddr_type, ddr_hz);
 };
 #elif defined(CONFIG_MACH_MT6739)
 static void __spm_check_dram_type(void)
@@ -1013,6 +1018,7 @@ int spm_golden_setting_cmp(bool en)
 #if defined(CONFIG_MACH_MT6763)
 	switch (__spm_get_dram_type()) {
 	case SPMFW_LP4X_2CH:
+	case SPMFW_LP4_2CH_2400:
 		ddrphy_setting = ddrphy_setting_lp4_2ch;
 		ddrphy_num = ARRAY_SIZE(ddrphy_setting_lp4_2ch);
 		break;
@@ -1031,6 +1037,7 @@ int spm_golden_setting_cmp(bool en)
 #elif defined(CONFIG_MACH_MT6771)
 	switch (__spm_get_dram_type()) {
 	case SPMFW_LP4X_2CH_3733:
+	case SPMFW_LP4_2CH_2400:
 		ddrphy_setting = ddrphy_setting_lp4_2ch;
 		ddrphy_num = ARRAY_SIZE(ddrphy_setting_lp4_2ch);
 		break;

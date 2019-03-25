@@ -146,7 +146,6 @@ extern struct ccci_ccb_config ccb_configs[];
 #define CCCI_IOC_SET_MD_SBP_CFG			_IOW(CCCI_IOC_MAGIC, 40, unsigned int) /* md_init */
 #define CCCI_IOC_GET_MD_SBP_CFG			_IOW(CCCI_IOC_MAGIC, 41, unsigned int) /* md_init */
 #define CCCI_IOC_GET_MD_PROTOCOL_TYPE		_IOR(CCCI_IOC_MAGIC, 42, char[16]) /* mdlogger, META */
-#define CCCI_IOC_SEND_SIGNAL_TO_USER		_IOW(CCCI_IOC_MAGIC, 43, unsigned int) /* md_init */
 #define CCCI_IOC_RESET_MD1_MD3_PCCIF		_IO(CCCI_IOC_MAGIC, 45) /* md_init */
 #define CCCI_IOC_SIM_LOCK_RANDOM_PATTERN	_IOW(CCCI_IOC_MAGIC, 46, unsigned int)
 #define CCCI_IOC_SET_BOOT_DATA			_IOW(CCCI_IOC_MAGIC, 47, unsigned int[16]) /* md_init */
@@ -174,10 +173,6 @@ extern struct ccci_ccb_config ccb_configs[];
 #define CCCI_IOC_GET_CCB_CONFIG			_IOWR(CCCI_IOC_MAGIC, 64, struct ccci_ccb_config)
 #define CCCI_IOC_CCB_CTRL_OFFSET		_IOR(CCCI_IOC_MAGIC, 65, unsigned int)
 #define CCCI_IOC_GET_CCB_DEBUG_VAL		_IOWR(CCCI_IOC_MAGIC, 67, struct ccci_ccb_debug)
-
-#define CCCI_IOC_ENTER_UPLOAD			_IO(CCCI_IOC_MAGIC, 68) /* modem log for S */
-#define CCCI_IOC_GET_RAT_STR			_IOR(CCCI_IOC_MAGIC, 69, unsigned int[16])
-#define CCCI_IOC_SET_RAT_STR			_IOW(CCCI_IOC_MAGIC, 70, unsigned int[16])
 
 #define CCCI_IOC_CCB_CTRL_INFO			_IOWR(CCCI_IOC_MAGIC, 71, struct ccb_ctrl_info)
 

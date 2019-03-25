@@ -252,6 +252,10 @@ typedef enum {
 	SENSOR_FEATURE_OPEN_SECURE_SESSION,
 	SENSOR_FEATURE_CLOSE_SECURE_SESSION,
 	SENSOR_FEATURE_SET_AS_SECURE_DRIVER,
+	SENSOR_FEATURE_GET_AE_EFFECTIVE_FRAME_FOR_LE,
+	SENSOR_FEATURE_GET_AE_FRAME_MODE_FOR_LE,
+	SENSOR_FEATURE_GET_CTRL_PIN_CAPABILITY,
+	SENOSR_FEATURE_GET_OFFSET_TO_START_OF_EXPOSURE,
 	SENSOR_FEATURE_MAX
 } ACDK_SENSOR_FEATURE_ENUM;
 
@@ -820,6 +824,13 @@ typedef struct {
 	SENSOR_PHY_TYPE_ENUM SensroInterfaceType;
 	INDATA_FORMAT_ENUM SensorIndataformat;
 } IMGSENSOR_GPIO_STRUCT;
+
+typedef struct {
+	MUINT32 reserved:30;
+	MUINT32 flash:1;
+	MUINT32 strobe:1;
+} IMGSENSOR_CTRL_PIN_CAPABILITY;
+
 /*******************************************************************************
 *
 ********************************************************************************/
@@ -1214,5 +1225,17 @@ enum {
 	FOUR_CELL_CAL_TYPE_ALL         =  0xff
 };
 
+enum IMGSENSOR_AE_MODE {
+	IMGSENSOR_AE_MODE_SE,
+	IMGSENSOR_AE_MODE_SKIP
+};
+
+struct IMGSENSOR_AE_FRM_MODE {
+	MUINT32 reserved:16;
+	MUINT32 frame_mode_1:4; /* Expoaure mode of LE frame + 1 */
+	MUINT32 frame_mode_2:4; /* Expoaure mode of LE frame + 2 */
+	MUINT32 frame_mode_3:4;
+	MUINT32 frame_mode_4:4;
+};
 
 #endif              /* _KD_IMGSENSOR_DATA_H */

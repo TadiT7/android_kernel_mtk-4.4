@@ -469,7 +469,7 @@ void dvfsrc_hw_policy_mask(bool mask)
 		spm_write(DVFSRC_MD_SW_CONTROL, spm_read(DVFSRC_MD_SW_CONTROL) | (0x1 << 5));
 		spm_write(DVFSRC_SW_REQ2, 0);
 	} else {
-		spm_write(DVFSRC_EMI_REQUEST, 0x00209209);
+		spm_write(DVFSRC_EMI_REQUEST, 0x00290209);
 		spm_write(DVFSRC_EMI_REQUEST3, 0x09000000);
 		spm_write(DVFSRC_VCORE_REQUEST, 0x00150000);
 		/* spm_write(DVFSRC_VCORE_REQUEST2, 0x29292929); */
@@ -570,7 +570,8 @@ void dvfsrc_md_scenario_update(bool suspend)
 			spm_write(DVFSRC_EMI_MD2SPM0, 0x0);
 		else
 			spm_write(DVFSRC_EMI_MD2SPM0, 0x38);
-	} else if (spmfw_dram_type == SPMFW_LP4X_2CH_3733) {
+	} else if ((spmfw_dram_type == SPMFW_LP4X_2CH_3733) ||
+		   (spmfw_dram_type == SPMFW_LP4_2CH_2400)) {
 		if (suspend)
 			spm_write(DVFSRC_EMI_MD2SPM0, 0x80C0);
 		else
@@ -693,7 +694,8 @@ static void dvfsrc_init(void)
 		spm_write(DVFSRC_EMI_MD2SPM0, 0x38);
 		spm_write(DVFSRC_EMI_MD2SPM1, 0x80C0);
 		spm_write(DVFSRC_VCORE_MD2SPM0, 0x80C0);
-	} else if (__spm_get_dram_type() == SPMFW_LP4X_2CH_3733) {
+	} else if ((__spm_get_dram_type() == SPMFW_LP4X_2CH_3733) ||
+		   (__spm_get_dram_type() == SPMFW_LP4_2CH_2400)) {
 		/* LP4 2CH 3600 */
 		spm_write(DVFSRC_LEVEL_LABEL_0_1, 0x00100000);
 		spm_write(DVFSRC_LEVEL_LABEL_2_3, 0x00210011);
@@ -842,7 +844,8 @@ void spm_request_dvfs_opp(int id, enum dvfs_opp opp)
 	switch (id) {
 	case 0: /* ZQTX */
 		if (!((__spm_get_dram_type() == SPMFW_LP4X_2CH_3733) ||
-			(__spm_get_dram_type() == SPMFW_LP4X_2CH_3200)))
+			(__spm_get_dram_type() == SPMFW_LP4X_2CH_3200) ||
+			(__spm_get_dram_type() == SPMFW_LP4_2CH_2400)))
 			return;
 		mt_secure_call(MTK_SIP_KERNEL_SPM_VCOREFS_ARGS, VCOREFS_SMC_CMD_2, id, emi_req[opp]);
 		break;
